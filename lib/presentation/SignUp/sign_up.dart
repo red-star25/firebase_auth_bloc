@@ -1,15 +1,28 @@
 import 'package:bloc_auth/bloc/bloc/auth_bloc.dart';
-import 'package:bloc_auth/data/repositories/auth_repository.dart';
 import 'package:bloc_auth/presentation/Dashboard/dashboard.dart';
 import 'package:bloc_auth/presentation/SignIn/sign_in.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SignUp extends StatelessWidget {
-  SignUp({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +82,13 @@ class SignUp extends StatelessWidget {
                                   hintText: "Email",
                                   border: OutlineInputBorder(),
                                 ),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 validator: (value) {
-                                  return RepositoryProvider.of<AuthRepository>(
-                                          context)
-                                      .emailValidator(value);
+                                  return value != null &&
+                                          !EmailValidator.validate(value)
+                                      ? 'Enter a valid email'
+                                      : null;
                                 },
                               ),
                               const SizedBox(
@@ -84,10 +100,12 @@ class SignUp extends StatelessWidget {
                                   hintText: "Password",
                                   border: OutlineInputBorder(),
                                 ),
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 validator: (value) {
-                                  return RepositoryProvider.of<AuthRepository>(
-                                          context)
-                                      .passwordValidator(value);
+                                  return value != null && value.length < 6
+                                      ? "Enter min. 6 characters"
+                                      : null;
                                 },
                               ),
                               const SizedBox(
@@ -111,7 +129,8 @@ class SignUp extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => SignIn()),
+                            MaterialPageRoute(
+                                builder: (context) => const SignIn()),
                           );
                         },
                         child: const Text("Sign In"),

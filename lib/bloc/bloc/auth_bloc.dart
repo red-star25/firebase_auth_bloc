@@ -18,6 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(Authenticated());
       } catch (e) {
         emit(AuthError(e.toString()));
+        emit(UnAuthenticated());
       }
     });
     // When User Presses the SignUp Button, we will send the SignUpRequest Event to the AuthBloc to handle it and emit the Authenticated State if the user is authenticated
@@ -29,6 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(Authenticated());
       } catch (e) {
         emit(AuthError(e.toString()));
+        emit(UnAuthenticated());
       }
     });
     // When User Presses the Google Login Button, we will send the GoogleSignInRequest Event to the AuthBloc to handle it and emit the Authenticated State if the user is authenticated
@@ -39,6 +41,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(Authenticated());
       } catch (e) {
         emit(AuthError(e.toString()));
+        emit(UnAuthenticated());
       }
     });
     // When User Presses the SignOut Button, we will send the SignOutRequested Event to the AuthBloc to handle it and emit the UnAuthenticated State

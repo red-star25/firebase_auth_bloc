@@ -60,22 +60,4 @@ class AuthRepository {
       throw Exception(e);
     }
   }
-
-  String? emailValidator(String? email) {
-    final RegExp _emailRegExp = RegExp(
-      r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
-    );
-
-    return _emailRegExp.hasMatch(email ?? '')
-        ? null
-        : "Enter a valid email address";
-  }
-
-  String? passwordValidator(String? password) {
-    final _passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
-
-    return _passwordRegExp.hasMatch(password ?? '')
-        ? null
-        : "Your password must be at least 8 characters long,\nand contain at least one letter and one number";
-  }
 }

@@ -39,6 +39,7 @@ dependencies:
   equatable: ^2.0.3
   flutter_bloc: ^8.0.1
   google_sign_in: ^5.2.1
+  email_validator: ^2.0.1
 
 dev_dependencies:
   flutter_test:
